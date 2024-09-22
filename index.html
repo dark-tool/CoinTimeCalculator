@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Channel points Calculator
+        </title>
+    </head>
+    <body>
+        <div>
+            <h3><u>Channel points Calculator</u></h3>
+            <label>This page calculates how many channel points you will collect based on how long you watch. It is assumed that you have auto-claim enabled.</label>
+        </div>
+
+        <br><br>
+
+        <div>
+            <label for="numberCollectedCoins">
+                Number of coins you have:
+            </label>
+            <input type="text" id="numberCollectedCoins" placeholder="0" value="0">
+        </div>
+
+        <br>
+
+        <label>Select Watchtime:</label>
+
+        <br>
+
+        <div>
+            <label for="days">D:</label>
+            <input type="text" id="days" size="5" placeholder="0" value="0">
+            <label for="hours">H:</label>
+            <input type="text" id="hours" size="5" placeholder="0" value="0">
+            <label for="minutes">M:</label>
+            <input type="text" id="minutes" size="5" placeholder="0" value="0">
+            <label for="tierSub">| Tier:</label>
+            <select id="tierSub">
+                <option value="0">No Sub</option>
+                <option value="1">T1</option>
+                <option value="2">T2</option>
+                <option value="3">T3</option>
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <button onclick="calcCoins()">Calculate</button>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="newCoins">Number of new Coins:</label>
+            <label id="newCoins"></label>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="totalCoins">Total number of Coins:</label>
+            <label id="totalCoins"></label>
+        </div>
+
+        <script>
+            function calcCoins() {
+                var collectedCoins = parseInt(document.getElementById("numberCollectedCoins").value);
+                collectedCoins = isNaN(collectedCoins) ? 0 : collectedCoins;
+                var days = parseInt(document.getElementById("days").value);
+                days = isNaN(days) ? 0 : days;
+                var hours = parseInt(document.getElementById("hours").value);
+                hours = isNaN(hours) ? 0 : hours;
+                var minutes = parseInt(document.getElementById("minutes").value);
+                minutes = isNaN(minutes) ? 0 : minutes;
+                var sub = parseInt(document.getElementById("tierSub").value);
+
+                var totalMinuteWatchTime = (days*24*60) + (hours*60) + minutes;
+                var fiveMinuteMark =  parseInt(totalMinuteWatchTime / 5);
+                var fifteenMinuteMark = parseInt(totalMinuteWatchTime / 15);
+                var newCoinsByTime;
+
+                switch (sub) {
+                    case 0 : newCoinsByTime = (fiveMinuteMark * 10) + (fifteenMinuteMark * 50);
+                        break;
+
+                    case 1 : newCoinsByTime = (fiveMinuteMark * 12) + (fifteenMinuteMark * 60);
+                        break;
+                    
+                    case 2 : newCoinsByTime = (fiveMinuteMark * 14) + (fifteenMinuteMark * 70);
+                        break;
+
+                    case 3 : newCoinsByTime = (fiveMinuteMark * 20) + (fifteenMinuteMark * 100);
+                        break;
+                }
+
+                document.getElementById("newCoins").innerHTML = newCoinsByTime;
+                document.getElementById("totalCoins").innerHTML = (collectedCoins + newCoinsByTime);
+            }
+        </script>
+    </body>
+</html>
